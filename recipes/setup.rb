@@ -61,7 +61,7 @@ node[:deploy].each do |application, deploy|
       Chef::Log.info("Class of v after is #{v.class}")
       # Generate YAML string
       yaml = YAML::dump(config)
-
+      Chef::Log.info("yaml is #{yaml}")
       # Convert YAML string keys to symbol keys for sidekiq while preserving
       # indentation. (queues: to :queues:)
       yaml = yaml.gsub(/^(\s*)([^:][^\s]*):/,'\1:\2:')
