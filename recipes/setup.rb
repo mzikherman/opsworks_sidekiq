@@ -53,7 +53,12 @@ node[:deploy].each do |application, deploy|
         end
       end
       Chef::Log.info("Config is #{config}")
-
+      # YOLO
+      v = config["queues"]
+      Chef::Log.info("Class of v is #{v.class}")
+      config["queues"] = v.to_a
+      v = config["queues"]
+      Chef::Log.info("Class of v after is #{v.class}")
       # Generate YAML string
       yaml = YAML::dump(config)
 
