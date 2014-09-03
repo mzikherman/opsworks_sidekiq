@@ -37,14 +37,14 @@ node[:deploy].each do |application, deploy|
       # Convert attribute classes to plain old ruby objects
       config = options[:config] ? options[:config].to_hash : {}
 
-      Chef::Log.debug("Config is #{config}")
+      Chef::Log.info("Config is #{config}")
       config.each do |k, v|
-        Chef::Log.debug("The value of k is #{k}")
-        Chef::Log.debug("The value of v is #{v}")
-        Chef::Log.debug("The class of k is #{k.class}")
-        Chef::Log.debug("The class of v is #{v.class}")
-        Chef::Log.debug("The inspect of k is #{k.inspect}")
-        Chef::Log.debug("The inspect of v is #{v.inspect}")
+        Chef::Log.info("The value of k is #{k}")
+        Chef::Log.info("The value of v is #{v}")
+        Chef::Log.info("The class of k is #{k.class}")
+        Chef::Log.info("The class of v is #{v.class}")
+        Chef::Log.info("The inspect of k is #{k.inspect}")
+        Chef::Log.info("The inspect of v is #{v.inspect}")
         case v
         when Chef::Node::ImmutableArray
           config[k] = v.to_a
@@ -52,7 +52,7 @@ node[:deploy].each do |application, deploy|
           config[k] = v.to_hash
         end
       end
-      Chef::Log.debug("Config is #{config}")
+      Chef::Log.info("Config is #{config}")
 
       # Generate YAML string
       yaml = YAML::dump(config)
