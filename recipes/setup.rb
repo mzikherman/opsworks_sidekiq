@@ -37,31 +37,8 @@ node[:deploy].each do |application, deploy|
       # Convert attribute classes to plain old ruby objects
       config = options[:config] ? options[:config].to_hash : {}
 
-      Chef::Log.info("Config is #{config}")
-      config.each do |k, v|
-        Chef::Log.info("The value of k is #{k}")
-        Chef::Log.info("The value of v is #{v}")
-        Chef::Log.info("The class of k is #{k.class}")
-        Chef::Log.info("The class of v is #{v.class}")
-        Chef::Log.info("The inspect of k is #{k.inspect}")
-        Chef::Log.info("The inspect of v is #{v.inspect}")
-        case v
-        when Chef::Node::ImmutableArray
-          config[k] = v.to_a
-        when Chef::Node::ImmutableMash
-          config[k] = v.to_hash
-        end
-      end
-      Chef::Log.info("Config is #{config}")
-      # YOLO
-      v = config["queues"]
-      Chef::Log.info("Class of v is #{v.class}")
-      config["queues"] = v.to_a
-      v = config["queues"]
-      Chef::Log.info("Class of v after is #{v.class}")
-      # Generate YAML string
+      config = JSON.parse(config.to_json)  # YOLO
       yaml = YAML::dump(config)
-      Chef::Log.info("yaml is #{yaml}")
       # Convert YAML string keys to symbol keys for sidekiq while preserving
       # indentation. (queues: to :queues:)
       yaml = yaml.gsub(/^(\s*)([^:][^\s]*):/,'\1:\2:')
